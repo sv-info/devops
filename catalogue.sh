@@ -43,7 +43,7 @@ VALIDATE $? "Installing nodejs..."
 id roboshop
 if [ $? -ne 0 ]
 then
-useradd --system --/home/app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>LOG_FILE
+useradd --system --home/app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>LOG_FILE
 VALIDATE $? "Creating user to run app..."
 else
 echo -e " Already Roboshop User Existed ... $Y Skippping $N"

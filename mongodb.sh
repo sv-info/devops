@@ -47,9 +47,4 @@ VALIDATE $? "Changing port ip..."
 systemctl restart mongod &>>LOG_FILE
 VALIDATE $? "Restarting MongoDB..."
 
-END=$(date +%s)
-
-TIME= $(( $END - $START )) 
-echo -e "Script executed in $TIME seconds..." 
-
 
