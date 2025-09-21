@@ -22,7 +22,7 @@ exit 0
 fi
 
 echo "Enter password..."
-read -s $MYSQL_PASSWORD
+read -s $MYSQL_ROOT_PASSWORD
 
 VALIDATE(){
 	if [ $1 -eq 0 ] 
@@ -35,14 +35,13 @@ VALIDATE(){
 }
 
 dnf install mysql-server -y &>>$LOG_FILE
-VALIDATE $? "Install MMysql..."
+VALIDATE $? "Installing MySQL server"
 
 systemctl enable mysqld &>>$LOG_FILE
-VALIDATE $? "Enabling mysql..."
+VALIDATE $? "Enabling MySQL"
 
-systemctl start mysqld &>>$LOG_FILE
-VALIDATE $? "Starting mysql..."
+systemctl start mysqld   &>>$LOG_FILE
+VALIDATE $? "Starting MySQL"
 
-mysql_secure_installation --set-root-pass $MYSQL_PASSWORD &>>$LOG_FILE
-VALIDATE $? "setting password..."
-
+mysql_secure_installation --set-root-pass $MYSQL_ROOT_PASSWORD &>>$LOG_FILE
+VALIDATE $? "Setting MySQL root password"

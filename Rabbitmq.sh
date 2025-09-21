@@ -22,7 +22,7 @@ exit 0
 fi
 
 echo "Enter password..."
-read -s $RABBIT_PASSWORD
+read -s $RABBITMQ_PASSWD
 
 VALIDATE(){
 	if [ $1 -eq 0 ] 
@@ -46,6 +46,8 @@ systemctl enable rabbitmq-server
 systemctl start rabbitmq-server &>>$LOG_FILE
 VALIDATE $? "Enabling and Starting RabbitMQ..."
 
-rabbitmqctl add_user roboshop $RABBIT_PASSWORD
-rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
+
+rabbitmqctl add_user roboshop $RABBITMQ_PASSWD &>>$LOG_FILE
+rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>>$LOG_FILE
+
 
