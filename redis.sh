@@ -13,6 +13,24 @@ SCRIPT_DIR=$PWD
 mkdir -p LOG_FOLDER
 echo "Script started executing at : $(date)"
 
+f [ $USER_ID -eq 0 ]
+then
+echo -e " $G Running as root user $N"
+else
+echo -e "$R Permission denied.. $N"
+exit 0
+fi
+
+VALIDATE(){
+	if [ $1 -eq 0 ] 
+	then
+	echo -e " $2 is .... $G SUCCESS $N "
+	else
+	echo -e " $2 is .... $R FAILED $N "
+	exit 0
+	fi
+}
+
 dnf module disable redis  &>>LOG_FILE
 VALIDATE $? "Disabling Exusting redis..."
 

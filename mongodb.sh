@@ -13,7 +13,7 @@ SCRIPT_DIR=$PWD
 mkdir -p LOG_FOLDER
 echo "Script started executing at : $(date)"
 
-if [ $USER_ID eq 0 ]
+if [ $USER_ID -eq 0 ]
 then
 echo -e " $G Running as root user $N"
 else
