@@ -47,7 +47,6 @@ useradd --system --home/app --shell /sbin/nologin --comment "roboshop system use
 VALIDATE $? "Creating user to run app..."
 else
 echo -e " Already Roboshop User Existed ... $Y Skippping $N"
-exit 1;
 fi
 
 mkdir /app
