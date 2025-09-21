@@ -61,7 +61,7 @@ npm install
 cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service &>>$LOG_FILE
 VALIDATE $? "Creating service..."
 
-systemctl daemon_reload
+systemctl daemon-reload
 systemctl enable catalogue
 systemctl start catalogue &>>$LOG_FILE
 VALIDATE $? "Starting catalogue..."
