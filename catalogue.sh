@@ -69,13 +69,13 @@ VALIDATE $? "Starting catalogue..."
 
 STATUS=$(mongosh --host mongodb.svdvps.online --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
 
-if [ $STATUS -lt 0 ]
+if [ "$STATUS" -lt 0 ]
 then
  mongosh --host mongodb.svdvps.online  </app/db/master-data.js  &>>$LOG_FILE
  VALIDATE $? "Loading data"
- else
+else
  echo -e "DATA Already Existing.. $Y SKIPPING $N"
  exit 0
- fi
+fi
 
 
