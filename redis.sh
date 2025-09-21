@@ -31,22 +31,22 @@ VALIDATE(){
 	fi
 }
 
-dnf module disable redis  &>>LOG_FILE
+dnf module disable redis  &>>$LOG_FILE
 VALIDATE $? "Disabling Exusting redis..."
 
-dnf module enable redis  &>>LOG_FILE
+dnf module enable redis  &>>$LOG_FILE
 VALIDATE $? "Enabling Exusting redis..."
 
-dnf install redis -y  &>>LOG_FILE
+dnf install redis -y  &>>$LOG_FILE
 VALIDATE $? "Installing redis..."
 
-sed -i 's/127.0.0.1/0.0.0.0/g' -e '/protected-mode/ c protected-mode no' /etc/redis/redis.conf  &>>LOG_FILE
+sed -i 's/127.0.0.1/0.0.0.0/g' -e '/protected-mode/ c protected-mode no' /etc/redis/redis.conf  &>>$LOG_FILE
 VALIDATE $? "changing port ip"
 
-systemctl  enable redis  &>>LOG_FILE
+systemctl  enable redis  &>>$LOG_FILE
 systemctl  start redis
 VALIDATE $? "Enabling and Starting..."
 END=$(date +%s)
 
-TIME= $(( $END - $START )) &>>LOG_FILE
+TIME= $(( $END - $START )) &>>$LOG_FILE
 echo -e "Script executed in $TIME seconds" 

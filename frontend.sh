@@ -31,34 +31,34 @@ VALIDATE(){
 	fi
 }
 
-dnf module disable nginx -y &>>LOG_FILE
+dnf module disable nginx -y &>>$LOG_FILE
 VALIDATE $? "Disabling nginx..."
 
-dnf module enable nginx:1.24 -y &>>LOG_FILE
+dnf module enable nginx:1.24 -y &>>$LOG_FILE
 VALIDATE $? "Enabling nginx..."
 
-dnf install nginx -y &>>LOG_FILE
+dnf install nginx -y &>>$LOG_FILE
 VALIDATE $? "Install Nodejs..."
 
 systemctl enable nginx
-systemctl start nginx &>>LOG_FILE
+systemctl start nginx &>>$LOG_FILE
 VALIDATE $? "Enabling and Starting ..."
 
-rm -rf /usr/share/nginx/html/* &>>LOG_FILE
+rm -rf /usr/share/nginx/html/* &>>$LOG_FILE
 VALIDATE $? "Removing existing contnet..."
 
 curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip
 
 cd /usr/share/nginx/html
-unzip /tmp/frontend.zip &>>LOG_FILE
+unzip /tmp/frontend.zip &>>$LOG_FILE
 VALIDATE $? "Downloading code..."
 
 rm -rf /etc/nginx/nginx.conf
 
-cp $SCRIPT_DIR/nginx.conf /etc/nginx/nginx.conf &>>LOG_FILE
+cp $SCRIPT_DIR/nginx.conf /etc/nginx/nginx.conf &>>$LOG_FILE
 VALIDATE $? "Copying nginx.conf..."
 
 
-systemctl restart nginx &>>LOG_FILE
+systemctl restart nginx &>>$LOG_FILE
 VALIDATE $? "Restarting nginx..."
 

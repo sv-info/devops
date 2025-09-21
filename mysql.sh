@@ -34,16 +34,16 @@ VALIDATE(){
 	fi
 }
 
-dnf install mysql-server -y &>>LOG_FILE
+dnf install mysql-server -y &>>$LOG_FILE
 VALIDATE $? "Install MMysql..."
 
-systemctl enable mysql-server &>>LOG_FILE
+systemctl enable mysql-server &>>$LOG_FILE
 VALIDATE $? "Enabling mysql..."
 
-systemctl enable mysql-server &>>LOG_FILE
+systemctl enable mysql-server &>>$LOG_FILE
 VALIDATE $? "Starting mysql..."
 
-mysql_secure_installation --set-root-pass $MYSQL_PASSWORD &>>LOG_FILE
+mysql_secure_installation --set-root-pass $MYSQL_PASSWORD &>>$LOG_FILE
 VALIDATE $? "setting password..."
 
 END=$(date +%s)

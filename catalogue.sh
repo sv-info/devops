@@ -31,22 +31,22 @@ VALIDATE(){
 	fi
 }
 
-dnf module disable nodejs -y &>>LOG_FILE
+dnf module disable nodejs -y &>>$LOG_FILE
 VALIDATE $? "Disabling Nodejs..."
 
-dnf module enable nodejs:20 -y &>>LOG_FILE
+dnf module enable nodejs:20 -y &>>$LOG_FILE
 VALIDATE $? "Enabling nodejs..."
 
-dnf install nodejs -y  &>>LOG_FILE
+dnf install nodejs -y  &>>$LOG_FILE
 VALIDATE $? "Installing nodejs..."
 
 id roboshop
 if [ $? -ne 0 ]
 then
-useradd --system --home/app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>LOG_FILE
-VALIDATE $? "Creating user to run app..."
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$$LOG_FILE
+    VALIDATE $? "Creating roboshop system user"
 else
-echo -e " Already Roboshop User Existed ... $Y Skippping $N"
+    echo -e "System user roboshop already created ... $Y SKIPPING $N"
 fi
 
 mkdir /app
@@ -58,12 +58,12 @@ unzip /tmp/catalogue.zip
 
 npm install
 
-cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service &>>LOG_FILE
+cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service &>>$LOG_FILE
 VALIDATE $? "Creating service..."
 
 systemctl daemon_relead
 systemctl enable catalogue
-systemctl enable catalogue &>>LOG_FILE
+systemctl enable catalogue &>>$LOG_FILE
 VALIDATE $? "Starting catalogue..."
 
 
@@ -71,7 +71,7 @@ STATUS=$(mongosh --host mongodb.svdvps.online --eval 'db.getMongo().getDBNames()
 
 if [ $STATUS -lt 0 ]
 then
- mongosh --host mongodb.svdvps.online  </app/db/master-data.js  &>>LOG_FILE
+ mongosh --host mongodb.svdvps.online  </app/db/master-data.js  &>>$LOG_FILE
  VALIDATE $? "Loading data"
  else
  echo -e "DATA Already Existing.. $Y SKIPPING $N"
