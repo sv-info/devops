@@ -37,16 +37,12 @@ VALIDATE(){
 dnf install mysql-server -y &>>$LOG_FILE
 VALIDATE $? "Install MMysql..."
 
-systemctl enable mysql-server &>>$LOG_FILE
+systemctl enable mysqld &>>$LOG_FILE
 VALIDATE $? "Enabling mysql..."
 
-systemctl enable mysql-server &>>$LOG_FILE
+systemctl enable mysqld &>>$LOG_FILE
 VALIDATE $? "Starting mysql..."
 
 mysql_secure_installation --set-root-pass $MYSQL_PASSWORD &>>$LOG_FILE
 VALIDATE $? "setting password..."
 
-END=$(date +%s)
-
-TIME= $(( $END - $START )) 
-echo -e "Script executed in $TIME seconds..." 

@@ -31,10 +31,10 @@ VALIDATE(){
 	fi
 }
 
-dnf module disable redis  &>>$LOG_FILE
+dnf module disable redis -y&>>$LOG_FILE
 VALIDATE $? "Disabling Exusting redis..."
 
-dnf module enable redis  &>>$LOG_FILE
+dnf module enable redis -y &>>$LOG_FILE
 VALIDATE $? "Enabling Exusting redis..."
 
 dnf install redis -y  &>>$LOG_FILE

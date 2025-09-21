@@ -37,7 +37,7 @@ VALIDATE(){
 cp rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo &>>$LOG_FILE
 VALIDATE $? "Copying RabbitMQ repo..."
 
-dnf install rabbitmq-server &>>$LOG_FILE
+dnf install rabbitmq-server -y &>>$LOG_FILE
 VALIDATE $? "Install RabittMQ..."
 
 systemctl enable rabbitmq-server
@@ -49,7 +49,3 @@ VALIDATE $? "Enabling and Starting RabbitMQ..."
 rabbbitmqctl add_user roboshop $RABBIT_PASSWORD
 rabbbitmqctl set_permission -p / roboshop ".*" ".*" ".*"
 
-END=$(date +%s)
-
-TIME= $(( $END - $START )) 
-echo -e "Script executed in $TIME seconds..." 
