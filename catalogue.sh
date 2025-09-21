@@ -40,10 +40,6 @@ VALIDATE $? "Enabling nodejs..."
 dnf install nodejs -y  &>>LOG_FILE
 VALIDATE $? "Installing nodejs..."
 
-systemctl enable nodejs
-systemctl start nodejs &>>LOG_FILE
-VALIDATE $? "Enabling and Starting nodejs..."
-
 id roboshop
 if [ $? -ne 0 ]
 then
@@ -63,7 +59,7 @@ unzip /tmp/catalogue.zip
 
 npm install
 
-cp catalogue.service /etc/systemd/system/catalogue.service &>>LOG_FILE
+cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service &>>LOG_FILE
 VALIDATE $? "Creating service..."
 
 systemctl daemon_relead
@@ -84,7 +80,3 @@ then
  fi
 
 
-END=$(date +%s)
-
-TIME= $(( $END - $START )) 
-echo -e "Script executed in $TIME seconds..." 

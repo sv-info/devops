@@ -55,14 +55,10 @@ VALIDATE $? "Downloading code..."
 
 rm -rf /etc/nginx/nginx.conf
 
-cp nginx.conf /etc/nginx/nginx.conf &>>LOG_FILE
+cp $SCRIPT_DIR/nginx.conf /etc/nginx/nginx.conf &>>LOG_FILE
 VALIDATE $? "Copying nginx.conf..."
 
 
 systemctl restart nginx &>>LOG_FILE
 VALIDATE $? "Restarting nginx..."
 
-END=$(date +%s)
-
-TIME= $(( $END - $START )) 
-echo -e "Script executed in $TIME seconds..." 
