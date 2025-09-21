@@ -7,7 +7,7 @@ USER_ID=$(id -u)
  N="\e[0m"
 LOG_FOLDER="/var/logs/shell-log"
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
-LOG_FILE=$LOG_FOLDER/$SCRIPT_NAME.log
+LOG_FILE="$LOG_FOLDER/$SCRIPT_NAME.log"
 SCRIPT_DIR=$PWD
 
 mkdir -p LOG_FOLDER
@@ -43,7 +43,7 @@ VALIDATE $? "Installing nodejs..."
 id roboshop
 if [ $? -ne 0 ]
 then
-    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$$LOG_FILE
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
     VALIDATE $? "Creating roboshop system user"
 else
     echo -e "System user roboshop already created ... $Y SKIPPING $N"
