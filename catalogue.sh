@@ -15,7 +15,7 @@ echo "Script started executing at : $(date)"
 
 if [ $USER_ID -eq 0 ]
 then
-echo -e " $G Running as root user $N"
+echo -e "$G Running as root user $N"
 else
 echo -e "$R Permission denied.. $N"
 exit 0
@@ -61,21 +61,19 @@ npm install
 cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service &>>$LOG_FILE
 VALIDATE $? "Creating service..."
 
-systemctl daemon_relead
+systemctl daemon_reload
 systemctl enable catalogue
-systemctl enable catalogue &>>$LOG_FILE
+systemctl start catalogue &>>$LOG_FILE
 VALIDATE $? "Starting catalogue..."
 
 
 STATUS=$(mongosh --host mongodb.svdvps.online --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
-
-if [ "$STATUS" -lt 0 ]
+if [ $STATUS -lt 0 ]
 then
- mongosh --host mongodb.svdvps.online  </app/db/master-data.js  &>>$LOG_FILE
- VALIDATE $? "Loading data"
+    mongosh --host mongodb.svdvps.online </app/db/master-data.js &>>$Log_file
+    VALIDATE $? "Loading data into MongoDB"
 else
- echo -e "DATA Already Existing.. $Y SKIPPING $N"
- exit 0
+    echo -e "Data is already loaded ... $Y SKIPPING $N"
 fi
 
 
