@@ -22,7 +22,7 @@ exit 0
 fi
 
 echo "Enter password..."
-read -s $RABBITMQ_PASSWD
+read -s RABBITMQ_PASSWD
 
 VALIDATE(){
 	if [ $1 -eq 0 ] 
