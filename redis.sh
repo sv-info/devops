@@ -1,0 +1,34 @@
+#!/bin/bash
+ START=$(date +%s)
+ USER_ID=$(id -u)
+ R="\e[31m"
+ G="\e[32m"
+ Y="\e[33m"
+ N="\e[0m"
+ LOG_FOLDER="/var/logs/shell-log"
+SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
+LOG_FILE=$LOG_FOLDER/$SCRIPT_NAME.log
+SCRIPT_DIR=$PWD
+
+mkdir -p LOG_FOLDER
+echo "Script started executing at : $(date)"
+
+dnf module disable redis  &>>LOG_FILE
+VALIDATE $? "Disabling Exusting redis..."
+
+dnf module enable redis  &>>LOG_FILE
+VALIDATE $? "Enabling Exusting redis..."
+
+dnf install redis -y  &>>LOG_FILE
+VALIDATE $? "Installing redis..."
+
+sed -i 's/127.0.0.1/0.0.0.0/g' -e '/protected-mode/ c protected-mode no' /etc/redis/redis.conf  &>>LOG_FILE
+VALIDATE $? "changing port ip"
+
+systemctl  enable redis  &>>LOG_FILE
+systemctl  start redis
+VALIDATE $? "Enabling and Starting..."
+END=$(date +%s)
+
+TIME= $(( $END - $START )) &>>LOG_FILE
+echo -e "Script executed in $TIME seconds" 
