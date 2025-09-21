@@ -50,6 +50,6 @@ VALIDATE $? "Restarting MongoDB..."
 END=$(date +%s)
 
 TIME= $(( $END - $START )) &>>LOG_FILE
-echo -e "Script executed in $TIME seconds" 
+echo -e "Script executed in $TIME seconds..." 
 
 
