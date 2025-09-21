@@ -66,6 +66,9 @@ systemctl enable catalogue
 systemctl start catalogue &>>$LOG_FILE
 VALIDATE $? "Starting catalogue..."
 
+cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongodb.repo 
+dnf install mongodb-mongosh -y &>>$Log_file
+VALIDATE $? "Installing MongoDB Client"
 
 STATUS=$(mongosh --host mongodb.svdvps.online --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
 if [ $STATUS -lt 0 ]
