@@ -40,7 +40,7 @@ VALIDATE $? "Install MMysql..."
 systemctl enable mysqld &>>$LOG_FILE
 VALIDATE $? "Enabling mysql..."
 
-systemctl enable mysqld &>>$LOG_FILE
+systemctl start mysqld &>>$LOG_FILE
 VALIDATE $? "Starting mysql..."
 
 mysql_secure_installation --set-root-pass $MYSQL_PASSWORD &>>$LOG_FILE
