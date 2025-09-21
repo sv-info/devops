@@ -21,6 +21,9 @@ echo -e "$R Permission denied.. $N"
 exit 0
 fi
 
+echo "Enter password..."
+read -s $RABBIT_PASSWORD
+
 VALIDATE(){
 	if [ $1 -eq 0 ] 
 	then
@@ -31,25 +34,22 @@ VALIDATE(){
 	fi
 }
 
-cp mongo.repo  /etc/yum.repos.d/mongodb.repo &>>LOG_FILE
-VALIDATE $? "Copying MongoDB Repo..."
+cp rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo &>>LOG_FILE
+VALIDATE $? "Copying RabbitMQ repo..."
 
-dnf install mongodb-org -y &>>LOG_FILE
-VALIDATE $? "Install MongoDB..."
+dnf install rabbitmq-server &>>LOG_FILE
+VALIDATE $? "Install RabittMQ..."
 
-systemctl start mongod
-systemctl enable mongod &>>LOG_FILE
-VALIDATE $? "Starting and Enabling MongoDB..."
+systemctl enable rabbitmq-server
 
-sed -i "s/127.0.0.1/0.0.0.0/g" /etc/mongod.conf &>>LOG_FILE
-VALIDATE $? "Changing port ip..."
 
-systemctl restart mongod &>>LOG_FILE
-VALIDATE $? "Restarting MongoDB..."
+systemctl start rabbitmq-server &>>LOG_FILE
+VALIDATE $? "Enabling and Starting RabbitMQ..."
+
+rabbbitmqctl add_user roboshop $RABBIT_PASSWORD
+rabbbitmqctl set_permission -p / roboshop ".*" ".*" ".*"
 
 END=$(date +%s)
 
 TIME= $(( $END - $START )) 
 echo -e "Script executed in $TIME seconds..." 
-
-

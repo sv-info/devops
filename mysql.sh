@@ -21,6 +21,9 @@ echo -e "$R Permission denied.. $N"
 exit 0
 fi
 
+echo "Enter password..."
+read -s $MYSQL_PASSWORD
+
 VALIDATE(){
 	if [ $1 -eq 0 ] 
 	then
@@ -31,25 +34,19 @@ VALIDATE(){
 	fi
 }
 
-cp mongo.repo  /etc/yum.repos.d/mongodb.repo &>>LOG_FILE
-VALIDATE $? "Copying MongoDB Repo..."
+dnf install mysql-server -y &>>LOG_FILE
+VALIDATE $? "Install MMysql..."
 
-dnf install mongodb-org -y &>>LOG_FILE
-VALIDATE $? "Install MongoDB..."
+systemctl enable mysql-server &>>LOG_FILE
+VALIDATE $? "Enabling mysql..."
 
-systemctl start mongod
-systemctl enable mongod &>>LOG_FILE
-VALIDATE $? "Starting and Enabling MongoDB..."
+systemctl enable mysql-server &>>LOG_FILE
+VALIDATE $? "Starting mysql..."
 
-sed -i "s/127.0.0.1/0.0.0.0/g" /etc/mongod.conf &>>LOG_FILE
-VALIDATE $? "Changing port ip..."
-
-systemctl restart mongod &>>LOG_FILE
-VALIDATE $? "Restarting MongoDB..."
+mysql_secure_installation --set-root-pass $MYSQL_PASSWORD &>>LOG_FILE
+VALIDATE $? "setting password..."
 
 END=$(date +%s)
 
 TIME= $(( $END - $START )) 
 echo -e "Script executed in $TIME seconds..." 
-
-
