@@ -30,7 +30,7 @@
       dest: /app
       remote_src: yes
   - name: install dependencies
-    command.general.npm:
+    community.general.npm:
       path: /app
   - name: create service 
     ansible.builtin.copy:
