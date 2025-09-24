@@ -14,7 +14,7 @@
     ansible.builtin.service:
       name: mongod
       state: started
-      enable: yes
+      enabled: yes
   - name: Changing port
     ansible.builtin.replace:
       path: /etc/mongod.conf
