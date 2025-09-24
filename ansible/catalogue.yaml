@@ -53,11 +53,11 @@
       name: mongodb-mongosh
       state: present
   - name: check data Existing
-    ansible.builtin.command: mongosh --host mongodb.daws84s.site --eval 'db.getMongo().getDBNames().indexOf("catalogue")'
+    ansible.builtin.command: mongosh --host mongodb.svdvps.online --eval 'db.getMongo().getDBNames().indexOf("catalogue")'
     register: catalogue_output
   - name: print out put
     ansible.builtin.debug: 
       msg: "{{catalogue_output}}"
   - name: load  data
-    ansible.builtin.shell: mongosh --host mongodb.daws84s.site < /app/db/master-data.js
+    ansible.builtin.shell: mongosh --host mongodb.svdvps.online < /app/db/master-data.js
     when: catalogue_output.stdout | int < 0

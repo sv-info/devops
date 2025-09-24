@@ -5,7 +5,7 @@
   - name: Disable Existing nginx
     ansible.builtin.command: dnf module disable nginx -y
   - name: Enable new version nginx
-    ansible.builtin.command: dnf module enable nginx:1.4 -y
+    ansible.builtin.command: dnf module enable nginx:1.24 -y
   - name: installing nginx
     ansible.builtin.dnf:
       name: nginx
@@ -14,14 +14,14 @@
     ansible.builtin.service:
       name: nginx
       state: started
-      enable : yes
+      enabled: yes
   - name: remove existing content
     ansible.builtin.file:
-      path: /etc/share/nginx/html
+      path: /usr/share/nginx/html
       state: absent
-  - name: carting html directory
+  - name: creating html directory
     ansible.builtin.file:
-      path: /etc/share/nginx/html
+      path: /usr/share/nginx/html
       state: directory
   - name: Download code
     ansible.builtin.get_url:
