@@ -34,7 +34,7 @@
       path: /app
   - name: create service 
     ansible.builtin.copy:
-      src: cart.service
+      src: user.service
       dest: /etc/systemd/system/user.service
   - name: daemon reload
     ansible.builtin.systemd_service:
