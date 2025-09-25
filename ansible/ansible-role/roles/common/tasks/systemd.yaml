@@ -1,7 +1,7 @@
 - name: Create service
   ansible.builtin.copy:
     src: "{{ component }}.service.j2"
-    dest: /etc/systemd/system/{{ component }}.service
+    dest: "/etc/systemd/system/{{ component }}.service"
 - name: Reload daemon
   ansible.builtin.systemd_service:
     daemon-reload: true
@@ -9,4 +9,4 @@
   ansible.builtin.service:
     name: "{{ component }}"
     state: started
-    enabled: yes
+    enabled: yess
