@@ -60,7 +60,7 @@
   - name: import data
     tags:
     - import
-    community.sql.mysql_db:
+    community.mysql.mysql_db:
       name: all
       login_user: root
       login_password: RoboShop@1
