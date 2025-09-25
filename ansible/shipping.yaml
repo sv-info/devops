@@ -54,7 +54,7 @@
       daemon_reload: true
   - name: starte and enable
     ansible.builtin.service:
-      name: user
+      name: shipping
       state: started
       enabled: yes
   - name: import data
