@@ -1,0 +1,4 @@
+CART_HOST: cart.svdvps.online
+MYSQL_HOST: mysql.svdvps.online
+MYSQL_USER: root
+MYSQL_PASSWORD: RohoShop@1
