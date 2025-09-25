@@ -1,0 +1,38 @@
+- name: node setup
+  include_role:
+  name: common
+  tasks_from: node-setup
+
+- name: app setup
+  include_role:
+    name: common
+    tasks_from: app-setup
+
+- name: systemd service
+  include_role:
+    name: common
+    tasks_from: systemd
+
+
+- name: Creating Mongo repo
+  ansible.builtin.copy:
+    src: mongo.repo
+    dest: /etc/yum.repos.d/mongodb.repo
+- name: Install mongodbclient
+  ansible.builtin.dnf:
+    name: mongodb-mongosh
+    state: present
+- name: check data Existing
+  ansible.builtin.command: mongosh --host mongodb.svdvps.online --eval 'db.getMongo().getDBNames().indexOf("catalogue")'
+  register: catalogue_output
+- name: print out put
+  ansible.builtin.debug: 
+    msg: "{{catalogue_output}}"
+- name: load  data
+  ansible.builtin.shell: mongosh --host mongodb.svdvps.online < /app/db/master-data.js
+  when: catalogue_output.stdout | int < 0
+
+- name: systemd service
+  include_role:
+    name: common
+    tasks_from: systemd
