@@ -8,5 +8,5 @@
 - name: start and enable catalogue
   ansible.builtin.service:
     name: "{{ component }}"
-    state: started
+    state: restarted
     enabled: yes
