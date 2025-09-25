@@ -1,1 +1,2 @@
-MONGODB_HOST: mongodb.svdvps.online
+REDIS_HOST: redis.svdvps.online
+CATALOGUE_HOST: catalogue.svdvps.online
