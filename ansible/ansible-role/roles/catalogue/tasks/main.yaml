@@ -1,7 +1,7 @@
 - name: node setup
   include_role:
-  name: common
-  tasks_from: node-setup
+    name: common
+    tasks_from: node-setup
 
 - name: app setup
   include_role:
