@@ -20,14 +20,24 @@
 - name: check data Existing
   ansible.builtin.command: mongosh --host mongodb.svdvps.online --eval 'db.getMongo().getDBNames().indexOf("catalogue")'
   register: catalogue_output
+  ignore_error: true
 - name: print out put
   ansible.builtin.debug: 
     msg: "{{catalogue_output}}"
+  ignore_error: true
 - name: load  data
   ansible.builtin.shell: mongosh --host mongodb.svdvps.online < /app/db/master-data.js
   when: catalogue_output.stdout | int < 0
+  ignore_error: true
 
 - name: systemd service
   include_role:
     name: common
     tasks_from: systemd.yaml
+
+- name: Deployment
+  tags:
+  - deployment
+  import_role:
+    name: common
+    tasks_from: deployment

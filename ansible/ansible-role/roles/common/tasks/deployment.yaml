@@ -1,0 +1,27 @@
+- name: stop service
+  ansible.builtin.service:
+    name: "{{ component }}"
+    state: stopped
+
+- name: remove app dir
+  ansible.builtin.file:
+    path: /app
+    state: absent
+- name: add app dir
+  ansible.builtin.file:
+    path: /app
+    state: present
+
+- name: download code
+  ansible.builtin.unarchive:
+    url: "https://roboshop-artifacts.s3.amazonaws.com/{{ component }}-v{{ app-version }}.zip "
+    dest: /app
+
+- name: add app dir
+  community.general.npm:
+    path: /app
+
+- name: restart service
+  ansible.builtin.service:
+    name: "{{ component }}"
+    state: restarted
